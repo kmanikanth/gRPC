@@ -1,0 +1,37 @@
+syntax = "proto3";
+package product;
+option go_package = "product/";
+
+
+enum ProductType {
+  PRODUCT_TYPE_UNSPECIFIED = 0;
+  PRODUCT_TYPE_BOOK = 1;
+  PRODUCT_TYPE_ELECTRONIC = 2;
+  PRODUCT_TYPE_FURNITURE = 3;
+}
+
+// all the allowable data type for the fields are listed here - https://developers.google.com/protocol-buffers/docs/proto3
+
+message Product {
+  string id = 1;
+  string name = 2;
+  string description = 3;
+  int64 price = 4;
+  ProductType type = 5;
+}
+
+message ProductID {
+  string value = 1;
+}
+
+// Prerequistes
+// 1. Install protocal buffer
+// 2. Install grpc plugin
+// 3. Install protoc-gen-go-grpc plugin
+
+// protoc -I unary/api/proto unary/api/proto/product.proto --go_out=unary/internal/pb --go-grpc_out=unary/internal/pb
+// --proto_path=../../git/googleapis "if any external proto files are imported path to that files are mentioned with this flag"
+service ProductInfo {
+  rpc addProduct(Product) returns (ProductID);
+  rpc getProduct(ProductID) returns (Product);
+}
