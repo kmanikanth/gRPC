@@ -2,10 +2,11 @@ package main
 
 import (
 	"google.golang.org/grpc"
+	productRPC "interceptors/api/gRPC/product"
+	"interceptors/internal/intercept"
+	"interceptors/internal/pb/product"
 	"log"
 	"net"
-	productRPC "unary/api/gRPC/product"
-	"unary/internal/pb/product"
 )
 
 const (
@@ -17,7 +18,7 @@ func main() {
 	if err != nil {
 		log.Fatalf("failed to listen: %v", err)
 	}
-	s := grpc.NewServer()
+	s := grpc.NewServer(grpc.UnaryInterceptor(intercept.AuthUnaryInterceptor), grpc.StreamInterceptor(intercept.AuthStreamInterceptor))
 	product.RegisterProductInfoServer(s, &productRPC.Server{})
 	if err := s.Serve(lis); err != nil {
 		log.Fatalf("failed to serve: %v", err)

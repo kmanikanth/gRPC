@@ -1,0 +1,44 @@
+syntax = "proto3";
+package product;
+option go_package = "product/";
+
+
+enum ProductType {
+  PRODUCT_TYPE_UNSPECIFIED = 0;
+  PRODUCT_TYPE_BOOK = 1;
+  PRODUCT_TYPE_ELECTRONIC = 2;
+  PRODUCT_TYPE_FURNITURE = 3;
+}
+
+message Product {
+  string id = 1;
+  string name = 2;
+  string description = 3;
+  int64 price = 4;
+  ProductType type = 5;
+}
+
+message ProductID {
+  string value = 1;
+}
+
+message ProductsRequest {
+}
+
+message UpdateResponse {
+  string message = 3;
+}
+
+message BulkAddResponse {
+  string id = 1;
+  string name = 2;
+}
+
+// protoc -I api/proto api/proto/product.proto --go_out=internal/pb --go-grpc_out=internal/pb
+service ProductInfo {
+  rpc addProduct(Product) returns (ProductID);
+  rpc getProduct(ProductID) returns (Product);
+  rpc getProducts(ProductsRequest) returns (stream Product);
+  rpc updateProducts(stream Product) returns (UpdateResponse);
+  rpc bulkAdd(stream Product) returns (stream BulkAddResponse);
+}

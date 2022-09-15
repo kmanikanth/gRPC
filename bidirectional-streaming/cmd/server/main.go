@@ -1,11 +1,11 @@
 package main
 
 import (
+	productRPC "bidirectional-streaming/api/gRPC/product"
+	"bidirectional-streaming/internal/pb/product"
 	"google.golang.org/grpc"
 	"log"
 	"net"
-	productRPC "unary/api/gRPC/product"
-	"unary/internal/pb/product"
 )
 
 const (

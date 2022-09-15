@@ -4,7 +4,7 @@ import (
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 	"log"
-	"unary/internal/client"
+	"server-streaming/internal/client"
 )
 
 const (
@@ -18,5 +18,6 @@ func main() {
 	}
 	defer conn.Close()
 	c := client.NewClient(conn)
-	c.AddProduct()
+	c.AddProducts()
+	c.GetProducts()
 }

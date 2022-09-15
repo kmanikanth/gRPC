@@ -4,8 +4,8 @@ import (
 	"google.golang.org/grpc"
 	"log"
 	"net"
-	productRPC "unary/api/gRPC/product"
-	"unary/internal/pb/product"
+	productRPC "server-streaming/api/gRPC/product"
+	"server-streaming/internal/pb/product"
 )
 
 const (

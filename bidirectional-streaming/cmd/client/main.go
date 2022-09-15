@@ -1,10 +1,10 @@
 package main
 
 import (
+	"bidirectional-streaming/internal/client"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 	"log"
-	"unary/internal/client"
 )
 
 const (
@@ -18,5 +18,5 @@ func main() {
 	}
 	defer conn.Close()
 	c := client.NewClient(conn)
-	c.AddProduct()
+	c.BulkAdd()
 }

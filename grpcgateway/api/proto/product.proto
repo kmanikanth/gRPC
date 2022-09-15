@@ -2,6 +2,8 @@ syntax = "proto3";
 package product;
 option go_package = "product/";
 
+import "google/api/annotations.proto";
+
 enum ProductType {
   PRODUCT_TYPE_UNSPECIFIED = 0;
   PRODUCT_TYPE_BOOK = 1;
@@ -25,7 +27,7 @@ message Product {
 }
 
 message ProductID {
-  string value = 1;
+  string product_id = 1;
 }
 
 // Prerequistes - https://developers.google.com/protocol-buffers/docs/gotutorial#compiling-your-protocol-buffers
@@ -39,5 +41,9 @@ message ProductID {
 // protoc --proto_path=IMPORT_PATH --cpp_out=DST_DIR --java_out=DST_DIR --python_out=DST_DIR --go_out=DST_DIR --ruby_out=DST_DIR --objc_out=DST_DIR --csharp_out=DST_DIR path/to/file.proto
 service ProductInfo {
   rpc addProduct(Product) returns (ProductID);
-  rpc getProduct(ProductID) returns (Product);
+  rpc getProduct(ProductID) returns (Product){
+    option (google.api.http) = {
+      get: "/v1/product/{product_id}"
+    };
+  };
 }

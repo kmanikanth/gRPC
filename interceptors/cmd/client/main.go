@@ -3,8 +3,8 @@ package main
 import (
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
+	"interceptors/internal/client"
 	"log"
-	"unary/internal/client"
 )
 
 const (
@@ -19,4 +19,5 @@ func main() {
 	defer conn.Close()
 	c := client.NewClient(conn)
 	c.AddProduct()
+	c.GetProducts()
 }
